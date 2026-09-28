@@ -59,8 +59,7 @@ final class App: NSObject, NSApplicationDelegate {
     private var isRequestingPermission = false
     private var isFullySetup = false
     private var isShortcutMonitoringSetup = false
-    private var originalStatusImage: NSImage?
-    private var currentFeedbackTask: Task<Void, Never>?
+    private var statusItemIconController: StatusItemIconController?
 
     private lazy var extractTextItem: NSMenuItem = {
         let item = NSMenuItem(title: "Extract Text")
@@ -114,11 +113,18 @@ final class App: NSObject, NSApplicationDelegate {
         Logger.log(.info, "Creating status item...")
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.behavior = .terminationOnRemoval
+        // A fixed width is wider than the narrow quill and gives the icon room
+        // to rotate while an extraction is running without shifting the menu bar.
+        item.length = 24
         if let menuBarIcon = NSImage(named: "MenuBarIcon") {
           menuBarIcon.isTemplate = true
           item.button?.image = menuBarIcon
         } else {
-          item.button?.image = .with(symbolName: "text.viewfinder", pointSize: 15)
+          item.button?.image = .with(symbolName: "text.viewfinder", pointSize: 17)
+        }
+        if let button = item.button {
+          statusItemIconController = StatusItemIconController(
+            button: button, idleImage: button.image)
         }
         Logger.log(
             .info,
@@ -630,6 +636,7 @@ final class App: NSObject, NSApplicationDelegate {
         let base64Image = imageData.base64EncodedString()
 
         isExtracting = true
+        statusItemIconController?.apply(.extracting)
 
         Task {
             defer { isExtracting = false }
@@ -644,19 +651,24 @@ final class App: NSObject, NSApplicationDelegate {
                 if NSPasteboard.general.setString(extractedContent, forType: .string) {
                     showSuccessFeedback()
                     historyManager.addEntry(extractedContent, promptId: prompt?.id, promptName: prompt?.name ?? "Text")
+                } else {
+                    statusItemIconController?.apply(.failure)
+                    NSAlert.showModalAlert(
+                        message: "Failed to copy the extracted content to the clipboard.")
+                    // Restart the warning so it stays visible after the alert closes.
+                    statusItemIconController?.apply(.failure)
                 }
             } catch {
+                statusItemIconController?.apply(.failure)
                 NSAlert.showModalAlert(
                     message: "Failed to extract content: \(error.localizedDescription)")
+                statusItemIconController?.apply(.failure)
                 Logger.log(.error, "Extraction failed: \(error)")
             }
         }
     }
 
     func showSuccessFeedback() {
-        // Cancel any existing feedback task
-        currentFeedbackTask?.cancel()
-
         // Play screenshot sound
         if let soundURL = Bundle.main.url(forResource: "Screen Capture", withExtension: "aif"),
             let screenshotSound = NSSound(contentsOf: soundURL, byReference: true)
@@ -666,21 +678,7 @@ final class App: NSObject, NSApplicationDelegate {
             Logger.log(.error, "Could not load screenshot sound file from app bundle")
         }
 
-        // Update status item icon with proper state management
-        if let button = self.statusItem.button {
-            if originalStatusImage == nil {
-                originalStatusImage = button.image
-            }
-            button.image = .with(symbolName: "checkmark.circle.fill", pointSize: 15)
-
-            // Create new feedback restoration task
-            currentFeedbackTask = Task { [weak self] in
-                try? await Task.sleep(nanoseconds: 1_500_000_000)  // 1.5 seconds
-                if !Task.isCancelled, let self = self {
-                    button.image = self.originalStatusImage
-                }
-            }
-        }
+        statusItemIconController?.apply(.success)
     }
 
     private func updateHistoryMenu() {

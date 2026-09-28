@@ -85,3 +85,8 @@ run_swift_test \
   Amanuensis/Sources/Config.swift \
   -framework AppKit \
   -framework Carbon
+
+run_swift_test \
+  StatusItemIconStateTests \
+  Tests/StatusItemIconStateTests.swift \
+  Amanuensis/Sources/StatusItemIconState.swift

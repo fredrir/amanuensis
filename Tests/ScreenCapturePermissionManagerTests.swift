@@ -22,7 +22,6 @@ struct ScreenCapturePermissionManagerTests {
         )
 
         await manager.startMonitoringWithoutPrompt()
-        // Give the background timer a chance to fire: it must never request access.
         try? await Task.sleep(nanoseconds: 2_200_000_000)
         expect(requests == 0, "Startup and polling must not request screen access")
         expect(!manager.hasPermission, "Missing permission must remain denied")

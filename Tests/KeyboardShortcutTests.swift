@@ -57,7 +57,6 @@ struct KeyboardShortcutTests {
                    "Norwegian physical key and modifiers survive persistence")
         }
 
-        // Exercise real Carbon registration without generating any keyboard events.
         let monitor = ShortcutMonitor.shared
         let binding = Shortcut(keyCode: kVK_F19, modifiers: [.command, .control, .option, .shift])
         monitor.setShortcut(binding, for: .visionOCR)

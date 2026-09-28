@@ -38,6 +38,8 @@
 		D1000006000000000000000A /* ProviderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000006000000000000000B /* ProviderStore.swift */; };
 		D1000008000000000000000A /* GraniteInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000008000000000000000B /* GraniteInstaller.swift */; };
 		D1000007000000000000000A /* ProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000007000000000000000B /* ProviderSettingsView.swift */; };
+		A1000001000000000000000A /* StatusItemIconState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000000000000000B /* StatusItemIconState.swift */; };
+		A1000002000000000000000A /* StatusItemIconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000000B /* StatusItemIconController.swift */; };
 		F5B0C7647A784F30BB1B71D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C128894D5D084D2FBAADA65C /* Assets.xcassets */; };
 		F1000002000000000000000A /* InjectionSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000000000000000A /* InjectionSupport.swift */; };
 		F1000003000000000000000A /* InjectionLite in Frameworks */ = {isa = PBXBuildFile; productRef = F1000004000000000000000A /* InjectionLite */; };
@@ -79,6 +81,8 @@
 		D1000006000000000000000B /* ProviderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderStore.swift; sourceTree = "<group>"; };
 		D1000008000000000000000B /* GraniteInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteInstaller.swift; sourceTree = "<group>"; };
 		D1000007000000000000000B /* ProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderSettingsView.swift; sourceTree = "<group>"; };
+		A1000001000000000000000B /* StatusItemIconState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemIconState.swift; sourceTree = "<group>"; };
+		A1000002000000000000000B /* StatusItemIconController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemIconController.swift; sourceTree = "<group>"; };
 		C128894D5D084D2FBAADA65C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F1000001000000000000000A /* InjectionSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectionSupport.swift; sourceTree = "<group>"; };
 		F1000006000000000000000A /* Info-Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Info-Debug.entitlements"; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				B9583C912DBD8C8300F43550 /* App.swift */,
 				B9583C922DBD8C8300F43550 /* Config.swift */,
 				B9583C942DBD8C8300F43550 /* Logger.swift */,
+				A1000001000000000000000B /* StatusItemIconState.swift */,
+				A1000002000000000000000B /* StatusItemIconController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -320,6 +326,8 @@
 				D1000006000000000000000A /* ProviderStore.swift in Sources */,
 				D1000008000000000000000A /* GraniteInstaller.swift in Sources */,
 				D1000007000000000000000A /* ProviderSettingsView.swift in Sources */,
+				A1000001000000000000000A /* StatusItemIconState.swift in Sources */,
+				A1000002000000000000000A /* StatusItemIconController.swift in Sources */,
 				F1000002000000000000000A /* InjectionSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

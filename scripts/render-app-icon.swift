@@ -1,8 +1,4 @@
 #!/usr/bin/env swift
-//
-//  Rasterises Assets/AppIcon.svg into Amanuensis/Assets.xcassets/AppIcon.appiconset.
-//  Run with: just appicon
-//
 
 import AppKit
 import CoreGraphics

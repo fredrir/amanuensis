@@ -32,7 +32,6 @@ struct ProviderStoreTests {
         print("ProviderStoreTests passed")
     }
 
-    /// Settings saved by the Gemini-only release should become the first provider.
     @MainActor
     private static func checkMigration(defaults: UserDefaults) {
         defaults.set("legacy-key", forKey: "geminiAPIKey")
@@ -156,7 +155,6 @@ struct ProviderStoreTests {
         print("  renaming ok")
     }
 
-    /// Providers saved before presets were stored should keep the classification the picker showed.
     @MainActor
     private static func checkLegacyPresets(defaults: UserDefaults) {
         let legacy: [[String: String]] = [
