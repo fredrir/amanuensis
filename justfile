@@ -51,13 +51,9 @@ clean:
 appicon:
 	@xcrun swift scripts/render-app-icon.swift
 
-# Render logo draft contact sheet.
-logo-drafts:
-	@xcrun swift design/tools/render-drafts.swift
-
-# Render brand-colour direction sheet.
-color-drafts:
-	@xcrun swift design/tools/render-palettes.swift
+# Render the menu-bar template glyph.
+menubar:
+	@xcrun swift scripts/render-menu-icon.swift
 
 # Raw xcodebuild output, used by the VSCode problem matcher.
 [private]

@@ -363,12 +363,12 @@ private final class ScreenRegionSelectionView: NSView {
             return
         }
 
-        NSColor.systemBlue.withAlphaComponent(0.14).setFill()
+        (NSColor(named: "BrandLapis") ?? .systemBlue).withAlphaComponent(0.14).setFill()
         selectionRect.fill()
 
         let borderPath = NSBezierPath(rect: selectionRect.insetBy(dx: 0.5, dy: 0.5))
         borderPath.lineWidth = 2
-        NSColor.white.withAlphaComponent(0.95).setStroke()
+        (NSColor(named: "BrandParchment") ?? .white).withAlphaComponent(0.95).setStroke()
         borderPath.stroke()
     }
 

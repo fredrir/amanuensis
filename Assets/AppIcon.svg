@@ -4,80 +4,23 @@
 
   Regenerate the asset catalogue with: just appicon
 
-  The squircle outline is a digitised replica of the original 512 px artwork:
-  continuous-curvature corners, 1002.6 units wide and 1001.4 tall. The body path
-  is repeated because AppKit's SVG renderer only honours filters applied to a
-  <path> element directly, not to <use> or <g>.
+  Brand: C1 "flat medallion" - gilded medallion + quill on a lapis field.
+  Palette: C2 "Chiaroscuro" (design/profile/tokens.json). Solid fills only,
+  no gradients. The squircle outline is a digitised replica of the original
+  512 px artwork: continuous-curvature corners, 1002.6 units wide, 1001.4 tall.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <defs>
-    <linearGradient id="glyph" gradientUnits="userSpaceOnUse" x1="0" y1="194" x2="0" y2="806">
-      <stop offset="0" stop-color="#646464"/>
-      <stop offset="0.309" stop-color="#565656"/>
-      <stop offset="0.498" stop-color="#4b4b4b"/>
-      <stop offset="0.69" stop-color="#3f3f3f"/>
-      <stop offset="1" stop-color="#2d2d2d"/>
-    </linearGradient>
-    <filter id="drop" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="5.5"/>
-    </filter>
-  </defs>
+  <path fill="#0B0906" d="M 1011.276 499.2 L 1011.276 250 C 1010.435 180.03 994.767 112.261 943.248 62 C 917.954 37.323 883.995 18.268 849.639 10 C 821.247 3.168 793.421 2.587 764.333 0 L 511.03 -1 L 257.727 0 C 228.639 2.587 200.813 3.168 172.421 10 C 138.065 18.268 104.106 37.323 78.812 62 C 27.293 112.261 11.625 180.03 10.784 250 L 10.784 499.2 L 10.784 748.4 C 11.625 818.37 27.293 886.139 78.812 936.4 C 104.106 961.077 138.065 980.132 172.421 988.4 C 200.813 995.232 228.639 995.813 257.727 998.4 L 511.03 999.4 L 764.333 998.4 C 793.421 995.813 821.247 995.232 849.639 988.4 C 883.995 980.132 917.954 961.077 943.248 936.4 C 994.767 886.139 1010.435 818.37 1011.276 748.4 Z"/>
 
-  <path fill="#000000" opacity="0.52" filter="url(#drop)" transform="translate(0 13.75)" d="M 1011.276 499.2
-    L 1011.276 250
-    C 1010.435 180.03 994.767 112.261 943.248 62
-    C 917.954 37.323 883.995 18.268 849.639 10
-    C 821.247 3.168 793.421 2.587 764.333 0
-    L 511.03 -1
-    L 257.727 0
-    C 228.639 2.587 200.813 3.168 172.421 10
-    C 138.065 18.268 104.106 37.323 78.812 62
-    C 27.293 112.261 11.625 180.03 10.784 250
-    L 10.784 499.2
-    L 10.784 748.4
-    C 11.625 818.37 27.293 886.139 78.812 936.4
-    C 104.106 961.077 138.065 980.132 172.421 988.4
-    C 200.813 995.232 228.639 995.813 257.727 998.4
-    L 511.03 999.4
-    L 764.333 998.4
-    C 793.421 995.813 821.247 995.232 849.639 988.4
-    C 883.995 980.132 917.954 961.077 943.248 936.4
-    C 994.767 886.139 1010.435 818.37 1011.276 748.4
-    Z"/>
+  <circle cx="512" cy="512" r="362" fill="none" stroke="#E9C766" stroke-width="30"/>
+  <circle cx="512" cy="512" r="334" fill="none" stroke="#B98A1E" stroke-width="6"/>
+  <circle cx="512" cy="512" r="330" fill="#1E3A8A"/>
+  <circle cx="512" cy="512" r="300" fill="none" stroke="#E9C766" stroke-width="14" stroke-linecap="round" stroke-dasharray="0.1 118"/>
 
-  <path fill="#f4f4f4" d="M 1011.276 499.2
-    L 1011.276 250
-    C 1010.435 180.03 994.767 112.261 943.248 62
-    C 917.954 37.323 883.995 18.268 849.639 10
-    C 821.247 3.168 793.421 2.587 764.333 0
-    L 511.03 -1
-    L 257.727 0
-    C 228.639 2.587 200.813 3.168 172.421 10
-    C 138.065 18.268 104.106 37.323 78.812 62
-    C 27.293 112.261 11.625 180.03 10.784 250
-    L 10.784 499.2
-    L 10.784 748.4
-    C 11.625 818.37 27.293 886.139 78.812 936.4
-    C 104.106 961.077 138.065 980.132 172.421 988.4
-    C 200.813 995.232 228.639 995.813 257.727 998.4
-    L 511.03 999.4
-    L 764.333 998.4
-    C 793.421 995.813 821.247 995.232 849.639 988.4
-    C 883.995 980.132 917.954 961.077 943.248 936.4
-    C 994.767 886.139 1010.435 818.37 1011.276 748.4
-    Z"/>
-
-  <g fill="none" stroke="url(#glyph)" stroke-linecap="round">
-    <g stroke-width="61">
-      <path d="M 236.5 367.5 V 276 C 236.5 247.6 259.6 224.5 288 224.5 H 379.5"/>
-      <path d="M 785.56 367.5 V 276 C 785.56 247.6 762.5 224.5 734.06 224.5 H 642.56"/>
-      <path d="M 236.5 630.9 V 722.4 C 236.5 750.84 259.56 773.9 288 773.9 H 379.5"/>
-      <path d="M 785.56 630.9 V 722.4 C 785.56 750.84 762.5 773.9 734.06 773.9 H 642.56"/>
-    </g>
-    <g stroke-width="45">
-      <path d="M 371.5 383 H 649.5"/>
-      <path d="M 371.5 499 H 649.5"/>
-      <path d="M 371.5 616 H 553.5"/>
-    </g>
+  <g transform="translate(512 512) rotate(-14) scale(0.7)">
+    <path d="M 0 -380 C 50 -374 96 -338 124 -280 C 148 -224 154 -130 142 -40 C 132 34 96 88 36 112 L 12 116 L -28 112 C -88 88 -136 46 -140 -30 L -86 -52 L -132 -106 C -126 -212 -80 -314 -16 -368 C -10 -376 -5 -380 0 -380 Z" fill="#E9C766"/>
+    <path d="M 0 -380 C 50 -374 96 -338 124 -280 C 148 -224 154 -130 142 -40 C 132 34 96 88 36 112 L 12 116 L 0 116 Z" fill="#F3E9D2"/>
+    <path d="M 0 -350 L 0 400" stroke="#B98A1E" stroke-width="16" stroke-linecap="round"/>
+    <path d="M 0 462 C -20 438 -26 408 -15 388 C -7 376 7 376 15 388 C 26 408 20 438 0 462 Z" fill="#C8341A"/>
   </g>
 </svg>

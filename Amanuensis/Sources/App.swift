@@ -114,7 +114,12 @@ final class App: NSObject, NSApplicationDelegate {
         Logger.log(.info, "Creating status item...")
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.behavior = .terminationOnRemoval
-        item.button?.image = .with(symbolName: "text.viewfinder", pointSize: 15)
+        if let menuBarIcon = NSImage(named: "MenuBarIcon") {
+          menuBarIcon.isTemplate = true
+          item.button?.image = menuBarIcon
+        } else {
+          item.button?.image = .with(symbolName: "text.viewfinder", pointSize: 15)
+        }
         Logger.log(
             .info,
             "Status item button: \(String(describing: item.button)), image: \(String(describing: item.button?.image))"

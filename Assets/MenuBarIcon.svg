@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Amanuensis menu-bar glyph - master vector source (1024 x 1024).
+
+  Render to Amanuensis/Assets.xcassets/MenuBarIcon.imageset with:
+    xcrun swift design/tools/render-menu-icon.swift
+
+  Simplified single-weight quill silhouette for template rendering at 16-18 pt.
+  The full medallion is illegible at menu-bar size, so the glyph drops the ring
+  and lapis field and keeps only the quill. Solid black (template image).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <g transform="translate(512 500) rotate(-18) scale(0.86)" fill="#000000">
+    <path d="M 0 -400 C 42 -372 76 -314 90 -244 C 102 -176 102 -96 90 -28 L 16 32 L -28 24 C -66 -34 -82 -132 -72 -230 C -64 -318 -34 -382 0 -400 Z"/>
+    <path d="M -12 -360 L -12 400 L 12 400 L 12 -360 Z"/>
+    <path d="M 0 476 C -28 444 -34 404 -17 380 C -9 368 9 368 17 380 C 34 404 28 444 0 476 Z"/>
+  </g>
+</svg>
