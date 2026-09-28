@@ -1,0 +1,1 @@
+"""ScreenScribe extraction backend."""

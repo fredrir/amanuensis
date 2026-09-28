@@ -76,3 +76,11 @@ _antigravity/
 
 # Release artifacts
 dist/
+
+# Python backend and provider runtimes
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+node_modules/
+backend/models/

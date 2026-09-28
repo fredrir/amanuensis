@@ -1,88 +1,46 @@
 import Foundation
 
 private func expect(_ condition: @autoclosure () -> Bool, _ message: String) {
-    guard condition() else {
-        fputs("FAIL: \(message)\n", stderr)
-        exit(1)
+    guard condition() else { fputs("FAIL: \(message)\n", stderr); exit(1) }
+}
+
+@MainActor
+private final class RecordingBackend: ExtractionBackend {
+    var calls: [(String, [String: Any])] = []
+    func request(_ method: String, params: [String: Any]) async throws -> [String: Any] {
+        calls.append((method, params))
+        return method == "extract" ? ["text": "  backend output  "] : ["models": ["vision-model"]]
     }
 }
 
 @main
 struct ProviderRoutingTests {
     @MainActor
-    static func main() {
-        checkValidation()
-        checkPresetsStartWithoutModel()
-        checkGeminiEndpoints()
+    static func main() async throws {
+        let backend = RecordingBackend()
+        let client = AIProviderClient(backend: backend)
+        for preset in AIProviderPreset.all {
+            var provider = preset.makeProvider()
+            provider.model = "vision-model"
+            provider.apiKey = "test-key"
+            let result = try await client.extractContent(from: "image", format: "latex", provider: provider)
+            expect(result == "  backend output  ", "Swift must preserve the backend's formatted output")
+            let call = backend.calls.last!
+            expect(call.0 == "extract", "Every provider should use backend extraction")
+            expect(call.1["format"] as? String == "latex", "The backend should receive the requested format")
+            expect(call.1["prompt"] == nil, "Swift should not own extraction prompts")
+            let config = call.1["provider"] as! [String: Any]
+            expect(config["kind"] as? String == provider.kind.rawValue, "The backend should receive the chosen provider")
+            let models = try await client.availableModels(for: provider)
+            expect(models == ["vision-model"], "Model discovery should use the backend")
+        }
+        let granite = AIProviderPreset.granite.makeProvider()
+        expect(!granite.requiresAPIKey && !granite.model.isEmpty, "Granite should work without setup")
+        for kind in [AIProviderKind.codex, .geminiSubscription] {
+            let provider = AIProviderConfiguration(name: "Subscription", kind: kind, baseURL: "")
+            expect(provider.isSubscription && !provider.requiresAPIKey, "Subscription providers should use sign-in")
+        }
         print("ProviderRoutingTests passed")
     }
 
-    private static func gemini(model: String) -> AIProviderConfiguration {
-        AIProviderConfiguration(
-            name: "Gemini",
-            kind: .gemini,
-            baseURL: Config.defaultGeminiBaseURL,
-            apiKey: "AIza-test",
-            model: model
-        )
-    }
-
-    @MainActor
-    private static func checkValidation() {
-        expect(gemini(model: "gemini-3.7-flash").validationIssues.isEmpty,
-               "A complete Gemini provider should be valid")
-
-        var keyless = gemini(model: "gemini-3.7-flash")
-        keyless.apiKey = ""
-        if Config.geminiAPIKey().isEmpty {
-            expect(keyless.validationIssues.contains("API key is required."),
-                   "Gemini providers without a key should be rejected")
-        }
-
-        var unnamed = gemini(model: "gemini-3.7-flash")
-        unnamed.name = "   "
-        expect(unnamed.validationIssues.contains("Name is required."),
-               "Providers should need a name")
-
-        var incompatible = gemini(model: "")
-        incompatible.baseURL = "ftp://example.com"
-        let issues = incompatible.validationIssues
-        expect(issues.contains("Base URL must be an http or https address."),
-               "Base URLs must be http or https addresses")
-        expect(issues.contains("Model is required."), "Providers should need a model")
-
-        let local = AIProviderConfiguration(
-            name: "LM Studio",
-            kind: .openAICompatible,
-            baseURL: "http://localhost:1234/v1",
-            apiKey: "",
-            model: "local-model",
-            presetID: "lmstudio"
-        )
-        expect(local.validationIssues.isEmpty,
-               "Local OpenAI-compatible endpoints should not require an API key")
-        expect(local.effectiveAPIKey == "", "Non-Gemini providers should not borrow the bundled key")
-
-        print("  validation ok")
-    }
-
-    /// Models come from the provider, so no preset should pick one up front.
-    private static func checkPresetsStartWithoutModel() {
-        expect(AIProviderPreset.all.allSatisfy { $0.makeProvider().model.isEmpty },
-               "New providers should start without a model")
-        expect(AIProviderPreset.all.allSatisfy { $0.makeProvider().presetID == $0.id },
-               "New providers should remember their preset")
-    }
-
-    private static func checkGeminiEndpoints() {
-        expect(Config.geminiEndpoint(for: "gemini-3.7-flash", baseURL: "https://proxy.example.com/")
-               == "https://proxy.example.com/v1beta/models/gemini-3.7-flash:generateContent",
-               "Custom Gemini base URLs should be supported without doubling slashes")
-        expect(Config.geminiEndpoint(for: "gemini-3.7-flash") ==
-               "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent",
-               "The default Gemini endpoint should be unchanged")
-        expect(Config.geminiModelsEndpoint(baseURL: "https://proxy.example.com/")
-               == "https://proxy.example.com/v1beta/models",
-               "The Gemini model list should sit under the same API root")
-    }
 }

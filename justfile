@@ -33,8 +33,9 @@ build *args:
 deploy *args:
 	@./scripts/deploy.sh {{args}}
 
-# Standalone test suite.
+# Backend and Swift tests.
 test:
+	@uv run --project backend pytest backend/tests
 	@./scripts/run-standalone-tests.sh
 
 verify-signing path=app_path:
@@ -50,3 +51,7 @@ appicon:
 [private]
 build-raw config="Debug":
 	@xcodebuild -project {{project}} -scheme {{scheme}} -configuration {{config}} -destination '{{dest}}' -derivedDataPath {{derived_data}} build
+
+# Install the local backend, provider clients and Granite model.
+backend-setup:
+	@uv run --project backend --locked python scripts/prepare-backend.py --development

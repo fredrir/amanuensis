@@ -18,6 +18,9 @@ struct ProviderStoreTests {
         }
         defaults.removePersistentDomain(forName: suiteName)
 
+        let fresh = ProviderStore(defaults: defaults)
+        expect(fresh.activeProvider.kind == .granite, "Fresh installs should default to offline Granite")
+        defaults.removePersistentDomain(forName: suiteName)
         checkMigration(defaults: defaults)
         checkCRUD(defaults: defaults)
 
@@ -36,7 +39,7 @@ struct ProviderStoreTests {
         defaults.set("gemini-3.5-flash", forKey: "geminiModel")
 
         let store = ProviderStore(defaults: defaults)
-        expect(store.providers.count == 1, "A fresh install should start with one provider")
+        expect(store.providers.count == 2, "Migration should retain Gemini and add Granite")
 
         let migrated = store.activeProvider
         expect(migrated.name == "Gemini", "The migrated provider should be named after the preset")
@@ -52,7 +55,7 @@ struct ProviderStoreTests {
                "The active provider should be persisted")
 
         let reloaded = ProviderStore(defaults: defaults)
-        expect(reloaded.providers.count == 1, "Migration should only run once")
+        expect(reloaded.providers.count == 2, "Migration should only run once")
         expect(reloaded.providers[0].id == migrated.id, "The reloaded provider should be the same one")
 
         print("  migration ok")
@@ -63,12 +66,12 @@ struct ProviderStoreTests {
         let store = ProviderStore(defaults: defaults)
         let gemini = store.activeProvider
 
-        let duplicate = store.add(preset: AIProviderPreset.all[0])
-        expect(store.providers.count == 2, "Adding a provider should append it")
+        let duplicate = store.add(preset: AIProviderPreset.all.first(where: { $0.id == "gemini" })!)
+        expect(store.providers.count == 3, "Adding a provider should append it")
         expect(duplicate.name == "Gemini 2", "Duplicate names should be made unique")
         expect(store.activeProviderID == duplicate.id, "Added providers should become active")
 
-        let openAI = store.add(preset: AIProviderPreset.all[1])
+        let openAI = store.add(preset: AIProviderPreset.all.first(where: { $0.id == "openai" })!)
         expect(openAI.kind == .openAICompatible, "The OpenAI preset should be an OpenAI-compatible provider")
         expect(openAI.baseURL == "https://api.openai.com/v1", "The preset should prefill the base URL")
 
@@ -88,18 +91,20 @@ struct ProviderStoreTests {
         expect(store.activeProviderID == gemini.id, "Unknown providers should not be activated")
 
         store.remove(id: duplicate.id)
-        expect(store.providers.count == 2, "Providers should be removable")
+        expect(store.providers.count == 3, "Providers should be removable")
         expect(store.activeProviderID == gemini.id, "Removing another provider should keep the selection")
 
         store.remove(id: gemini.id)
-        expect(store.providers.count == 1, "Removing the active provider should fall back to the first")
-        expect(store.activeProviderID == openAI.id, "The remaining provider should become active")
+        expect(store.providers.count == 2, "Removing the active provider should fall back to the first")
+        expect(store.activeProvider.kind == .granite, "Granite should become active")
+        store.setActiveProvider(openAI.id)
+        store.remove(id: store.providers.first(where: { $0.kind == .granite })!.id)
 
         store.remove(id: openAI.id)
         expect(store.providers.count == 1, "The last provider should never be removed")
 
         let reloaded = ProviderStore(defaults: defaults)
-        expect(reloaded.providers.count == 1, "Providers should survive a reload")
+        expect(reloaded.providers.count == 2, "Reload should restore the built-in Granite provider")
         expect(reloaded.activeProvider.id == openAI.id, "The active selection should survive a reload")
         expect(reloaded.activeProvider.name == "Work", "Provider edits should survive a reload")
         expect(reloaded.activeProvider.apiKey == "sk-work", "Credentials should survive a reload")
@@ -166,12 +171,12 @@ struct ProviderStoreTests {
         defaults.set(try! JSONSerialization.data(withJSONObject: json), forKey: ProviderStore.providersKey)
 
         let store = ProviderStore(defaults: defaults)
-        expect(store.providers.map(\.presetID) == ["gemini", "custom", "ollama", "custom"],
+        expect(store.providers.map(\.presetID) == ["gemini", "custom", "ollama", "custom", "granite"],
                "Legacy providers should count as a preset only while they keep its name")
 
         let stored = defaults.data(forKey: ProviderStore.providersKey)
             .flatMap { try? JSONSerialization.jsonObject(with: $0) as? [[String: Any]] } ?? []
-        expect(stored.compactMap { $0["presetID"] as? String } == ["gemini", "custom", "ollama", "custom"],
+        expect(stored.compactMap { $0["presetID"] as? String } == ["gemini", "custom", "ollama", "custom", "granite"],
                "Inferred presets should be written back on load")
 
         print("  legacy presets ok")
