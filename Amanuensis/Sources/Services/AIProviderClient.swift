@@ -59,6 +59,9 @@ final class BackendProcess: ExtractionBackend {
         environment["AMANUENSIS_STATE_ROOT"] = stateRoot.path
         environment["TMPDIR"] = FileManager.default.temporaryDirectory.path
         environment["AMANUENSIS_BACKEND_ROOT"] = root.path
+        if root == bundled, let granite = GraniteInstaller.shared.location {
+            environment["AMANUENSIS_GRANITE_ROOT"] = granite.path
+        }
         environment["PYTHONPATH"] = root.appendingPathComponent("src").path + ":" + root.appendingPathComponent("site-packages").path
         environment["PYTHONDONTWRITEBYTECODE"] = "1"
         environment["HF_HUB_OFFLINE"] = "1"
@@ -115,6 +118,12 @@ final class BackendProcess: ExtractionBackend {
         input = nil
         output = nil
         buffer.removeAll()
+    }
+
+    /// Restarts so the backend picks up an installed or removed Granite pack.
+    func restart() {
+        stop()
+        try? start()
     }
 
     func request(_ method: String, params: [String: Any] = [:]) async throws -> [String: Any] {

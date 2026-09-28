@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build, sign, notarize, package, and install a Developer ID release.
+# Publish the Granite pack if needed, then build, sign, notarize, package, and install a Developer ID release.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -90,13 +90,16 @@ trap 'rm -rf "${STAGING_DIR}"' EXIT
 
 APP_BUNDLE="${STAGING_DIR}/${APP_NAME}.app"
 
-log "Building universal release"
+"${SCRIPTS_DIR}/granite-pack.sh" --identity "${SIGNING_IDENTITY}" --notary-profile "${NOTARY_PROFILE}"
+
+log "Building Apple Silicon release"
 note "identity: ${SIGNING_IDENTITY}"
 xcodebuild_release "${SIGNING_IDENTITY}" "--timestamp"
 ditto "${RELEASE_APP}" "${APP_BUNDLE}"
-for architecture in arm64 x86_64; do
-  lipo -verify_arch "${architecture}" "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}"
-done
+[[ "$(lipo -archs "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}")" == "arm64" ]] ||
+  die "release binary must be arm64 only"
+[[ -f "${APP_BUNDLE}/Contents/Resources/Backend/granite-pack.json" ]] ||
+  die "release is missing the Granite pack manifest"
 
 log "Verifying signature"
 codesign --verify --deep --strict --verbose=2 "${APP_BUNDLE}"
@@ -112,27 +115,8 @@ log "Packaging ${DMG_NAME}"
 make_dmg "${APP_BUNDLE}" "${STAGED_DMG}"
 codesign --force --sign "${SIGNING_IDENTITY}" --timestamp "${STAGED_DMG}"
 
-NOTARY_RESULT="${STAGING_DIR}/notary-result.json"
-NOTARY_LOG="${STAGING_DIR}/notary-log.json"
-
 log "Submitting for notarization"
-xcrun notarytool submit "${STAGED_DMG}" \
-  --keychain-profile "${NOTARY_PROFILE}" \
-  --wait \
-  --output-format json >"${NOTARY_RESULT}"
-
-NOTARY_STATUS="$(plutil -extract status raw "${NOTARY_RESULT}")"
-NOTARY_ID="$(plutil -extract id raw "${NOTARY_RESULT}")"
-xcrun notarytool log "${NOTARY_ID}" \
-  --keychain-profile "${NOTARY_PROFILE}" \
-  "${NOTARY_LOG}"
-
-if [[ "${NOTARY_STATUS}" != "Accepted" ]]; then
-  printf 'error: notarization status was %s\n' "${NOTARY_STATUS}" >&2
-  cat "${NOTARY_LOG}" >&2
-  exit 1
-fi
-note "accepted: ${NOTARY_ID}"
+notarize "${STAGED_DMG}" "${NOTARY_PROFILE}" "${STAGING_DIR}/notary-log.json"
 
 log "Stapling and validating notarization ticket"
 xcrun stapler staple -q "${STAGED_DMG}"

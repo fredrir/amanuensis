@@ -9,7 +9,7 @@ from typing import Literal
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 
-from .config import MODEL_ID, MODEL_ROOT, BackendError
+from .config import MODEL_ROOT, BackendError, require_granite
 from .providers import Provider
 
 EXTRACTION_PROMPT = """Transcribe the supplied image into Markdown for document parsing.
@@ -53,8 +53,10 @@ def decode_image(encoded: str) -> bytes:
 
 
 def parse_markdown(text):
-    from docling.datamodel.base_models import DocumentStream, InputFormat
-    from docling.document_converter import DocumentConverter
+    # DocumentConverter needs the heavier convert-core extra; Markdown only needs its backend.
+    from docling.backend.md_backend import MarkdownDocumentBackend
+    from docling.datamodel.base_models import InputFormat
+    from docling.datamodel.document import InputDocument
 
     text = text.strip()
     # Remove only a known document wrapper, preserving actual code blocks.
@@ -63,10 +65,13 @@ def parse_markdown(text):
         text = wrapped.group(1)
     if not text:
         raise BackendError("The model returned no extracted content.", "empty_result")
-    converter = DocumentConverter(allowed_formats=[InputFormat.MD])
-    return converter.convert(
-        DocumentStream(name="capture.md", stream=io.BytesIO(text.encode()))
-    ).document
+    document = InputDocument(
+        path_or_stream=io.BytesIO(text.encode()),
+        format=InputFormat.MD,
+        backend=MarkdownDocumentBackend,
+        filename="capture.md",
+    )
+    return document._backend.convert()
 
 
 def render_document(document, output_format):
@@ -102,13 +107,7 @@ class Extractor:
             raise BackendError(
                 "Docling Granite requires an Apple Silicon Mac.", "unsupported_platform"
             )
-        if not (
-            MODEL_ROOT / MODEL_ID.replace("/", "--") / "model.safetensors"
-        ).is_file():
-            raise BackendError(
-                "The bundled Granite model is missing. Rebuild Amanuensis.",
-                "model_missing",
-            )
+        require_granite()
         if self.local_converter is None:
             options = VlmPipelineOptions(
                 artifacts_path=MODEL_ROOT,

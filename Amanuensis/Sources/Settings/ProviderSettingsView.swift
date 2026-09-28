@@ -3,6 +3,7 @@ import SwiftUI
 @MainActor
 struct ProviderSettingsView: View {
     @ObservedObject private var store = ProviderStore.shared
+    @ObservedObject private var granite = GraniteInstaller.shared
     #if DEBUG
         @ObservedObject private var injectionObserver = InjectionObserver.shared
     #endif
@@ -112,8 +113,7 @@ struct ProviderSettingsView: View {
                             .labelsHidden().textFieldStyle(.roundedBorder)
                     }
                 } else if provider.kind == .granite {
-                    Text("Runs entirely on this Mac. No account or API key required.")
-                        .font(.subheadline).foregroundStyle(.secondary)
+                    GraniteSection(installer: granite)
                 } else if provider.isLocal {
                     LabeledContent("API Key (optional):") {
                         SecureField("API Key", text: stringBinding(for: \.apiKey))
@@ -386,13 +386,13 @@ struct ProviderSettingsView: View {
     }
 
     private var canLoadModels: Bool {
-        if provider.kind == .granite { return true }
+        if provider.kind == .granite { return granite.state == .installed || granite.state == .unavailable }
         if provider.isSubscription { return signedIn }
         return !provider.requiresAPIKey || !provider.effectiveAPIKey.isEmpty
     }
 
     private var modelListSource: [String] {
-        [provider.id.uuidString, provider.resolvedBaseURL, provider.effectiveAPIKey, String(signedIn)]
+        [provider.id.uuidString, provider.resolvedBaseURL, provider.effectiveAPIKey, String(signedIn), String(canLoadModels)]
     }
 
     private func resetModelList() {
@@ -486,6 +486,58 @@ struct ProviderSettingsView: View {
     {
         binding(for: field)
             .trimmed()
+    }
+}
+
+private struct GraniteSection: View {
+    @ObservedObject var installer: GraniteInstaller
+    @State private var isConfirmingRemoval = false
+
+    var body: some View {
+        Text("Runs entirely on this Mac. No account or API key required.")
+            .font(.subheadline).foregroundStyle(.secondary)
+        LabeledContent("Local Model:") {
+            HStack(spacing: 8) {
+                switch installer.state {
+                case .unavailable:
+                    #if DEBUG
+                        Text("Provided by just backend-setup").foregroundStyle(.secondary)
+                    #else
+                        Text("Not downloadable in this build").foregroundStyle(.secondary)
+                    #endif
+                case .notInstalled:
+                    Text("Not installed").foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Download (\(installer.downloadSize))") { installer.install() }
+                case .downloading(let fraction):
+                    ProgressView(value: fraction).frame(maxWidth: 160)
+                    Text(fraction.formatted(.percent.precision(.fractionLength(0))))
+                        .monospacedDigit().foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Cancel") { installer.cancel() }
+                case .installing:
+                    ProgressView().controlSize(.small)
+                    Text("Installing…").foregroundStyle(.secondary)
+                    Spacer()
+                case .installed:
+                    Label("Installed", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+                    Spacer()
+                    Button("Remove…") { isConfirmingRemoval = true }
+                case .failed:
+                    Text("Download failed").foregroundStyle(.red)
+                    Spacer()
+                    Button("Retry") { installer.install() }
+                }
+            }
+        }
+        .confirmationDialog("Remove Docling Granite?", isPresented: $isConfirmingRemoval) {
+            Button("Remove", role: .destructive) { installer.remove() }
+        } message: {
+            Text("Local extraction will need another \(installer.downloadSize) download.")
+        }
+        if case .failed(let message) = installer.state {
+            Text(message).font(.caption).foregroundStyle(.red)
+        }
     }
 }
 

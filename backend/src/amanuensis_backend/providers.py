@@ -5,7 +5,7 @@ from urllib.parse import quote, urlsplit
 import httpx
 from pydantic import BaseModel, ConfigDict, Field, SecretStr
 
-from .config import MODEL_ID, MODEL_ROOT, BackendError
+from .config import MODEL_ID, BackendError, require_granite
 
 ProviderKind = Literal[
     "granite", "gemini", "openAICompatible", "anthropic", "codex", "geminiSubscription"
@@ -233,13 +233,7 @@ class APIProviders:
 
     async def models(self, provider: Provider) -> list[str]:
         if provider.kind == "granite":
-            if not (
-                MODEL_ROOT / MODEL_ID.replace("/", "--") / "model.safetensors"
-            ).is_file():
-                raise BackendError(
-                    "The bundled Granite model is missing. Rebuild Amanuensis.",
-                    "model_missing",
-                )
+            require_granite()
             return [MODEL_ID]
         if provider.kind == "gemini":
             models, token, seen = [], None, set()

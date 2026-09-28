@@ -4,6 +4,7 @@ import io
 import pytest
 from PIL import Image
 
+from amanuensis_backend import config
 from amanuensis_backend.config import BackendError
 from amanuensis_backend.extraction import (
     ExtractionRequest,
@@ -86,3 +87,15 @@ async def test_local_extraction_never_calls_cloud_provider(monkeypatch):
         ExtractionRequest(image=png_data(), format="text", provider={"kind": "granite"})
     )
     assert result == {"text": "Local text"}
+
+
+async def test_local_extraction_requires_installed_granite(monkeypatch, tmp_path):
+    monkeypatch.setattr(config, "MODEL_PATH", tmp_path / "missing")
+    extractor = Extractor(None, None, lambda *args: None)
+    with pytest.raises(BackendError) as raised:
+        await extractor.extract(
+            ExtractionRequest(
+                image=png_data(), format="text", provider={"kind": "granite"}
+            )
+        )
+    assert raised.value.code == "granite_missing"

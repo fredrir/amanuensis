@@ -81,6 +81,8 @@ xcodebuild_release() {
   local identity="$1"
   local timestamp_flag="$2"
 
+  rm -rf "${RELEASE_APP}"
+
   xcodebuild \
     -project "${PROJECT}" \
     -scheme "${APP_NAME}" \
@@ -122,6 +124,41 @@ make_dmg() {
     -ov \
     "${output}"
   rm -rf "${root}"
+}
+
+# Usage: notarize FILE PROFILE LOG_JSON
+notarize() {
+  local file="$1"
+  local profile="$2"
+  local log_file="$3"
+  local output submission status
+  output="$(mktemp "${TMPDIR:-/tmp}/${APP_NAME}-notary.XXXXXX")"
+
+  xcrun notarytool submit "${file}" \
+    --keychain-profile "${profile}" \
+    --wait \
+    --timeout 3h 2>&1 | tee "${output}" || true
+  submission="$(grep -Eo -m1 '[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}' "${output}")" ||
+    die "notarytool did not return a submission id"
+
+  xcrun notarytool info "${submission}" \
+    --keychain-profile "${profile}" \
+    --output-format json >"${output}"
+  status="$(plutil -extract status raw "${output}")"
+  rm -f "${output}"
+  if [[ "${status}" == "In Progress" ]]; then
+    die "notarization is still in progress; check it with: xcrun notarytool info ${submission} --keychain-profile ${profile}"
+  fi
+
+  xcrun notarytool log "${submission}" \
+    --keychain-profile "${profile}" \
+    "${log_file}"
+  if [[ "${status}" != "Accepted" ]]; then
+    printf 'error: notarization status was %s\n' "${status}" >&2
+    cat "${log_file}" >&2
+    exit 1
+  fi
+  note "accepted: ${submission}"
 }
 
 install_app() {

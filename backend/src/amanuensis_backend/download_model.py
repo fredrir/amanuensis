@@ -2,15 +2,14 @@ import shutil
 
 from huggingface_hub import snapshot_download
 
-from .config import MODEL_ID, MODEL_REVISION, MODEL_ROOT, ROOT
+from .config import MODEL_ID, MODEL_PATH, MODEL_REVISION, ROOT
 
 
 def main():
-    destination = MODEL_ROOT / MODEL_ID.replace("/", "--")
     snapshot_download(
         MODEL_ID,
         revision=MODEL_REVISION,
-        local_dir=destination,
+        local_dir=MODEL_PATH,
         allow_patterns=[
             "*.json",
             "*.safetensors",
@@ -21,8 +20,8 @@ def main():
             "NOTICE*",
         ],
     )
-    shutil.copyfile(ROOT / "licenses/Apache-2.0.txt", destination / "LICENSE")
-    (destination / "REVISION").write_text(MODEL_REVISION + "\n")
+    shutil.copyfile(ROOT / "licenses/Apache-2.0.txt", MODEL_PATH / "LICENSE")
+    (MODEL_PATH / "REVISION").write_text(MODEL_REVISION + "\n")
 
 
 if __name__ == "__main__":

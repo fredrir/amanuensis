@@ -33,6 +33,10 @@ build *args:
 deploy *args:
 	@./scripts/deploy.sh {{args}}
 
+# Build, sign, notarize, and publish the downloadable Granite pack [ --force --repository ]
+granite-pack *args:
+	@./scripts/granite-pack.sh {{args}}
+
 # Backend and Swift tests.
 test:
 	@uv run --project backend pytest backend/tests
@@ -47,11 +51,19 @@ clean:
 appicon:
 	@xcrun swift scripts/render-app-icon.swift
 
+# Render logo draft contact sheet.
+logo-drafts:
+	@xcrun swift design/tools/render-drafts.swift
+
+# Render brand-colour direction sheet.
+color-drafts:
+	@xcrun swift design/tools/render-palettes.swift
+
 # Raw xcodebuild output, used by the VSCode problem matcher.
 [private]
 build-raw config="Debug":
 	@xcodebuild -project {{project}} -scheme {{scheme}} -configuration {{config}} -destination '{{dest}}' -derivedDataPath {{derived_data}} build
 
-# Install the local backend, provider clients and Granite model.
+# Install the local backend, Granite dependencies, provider clients and model.
 backend-setup:
 	@uv run --project backend --locked python scripts/prepare-backend.py --development

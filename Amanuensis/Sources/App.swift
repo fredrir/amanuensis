@@ -505,6 +505,7 @@ final class App: NSObject, NSApplicationDelegate {
     private func ensurePermissionThenCapture(
         _ action: @escaping @MainActor () async -> Void
     ) {
+        guard ensureGraniteInstalled() else { return }
         Task { @MainActor in
             if permissionManager.checkPermission() {
                 onPermissionGranted()
@@ -545,6 +546,34 @@ final class App: NSObject, NSApplicationDelegate {
                 }
             }
         }
+    }
+
+    /// Offers the Granite download when it is the active provider but not installed yet.
+    private func ensureGraniteInstalled() -> Bool {
+        guard providerStore.activeProvider.kind == .granite else { return true }
+        let granite = GraniteInstaller.shared
+        switch granite.state {
+        case .installed, .unavailable:
+            return true
+        case .downloading, .installing:
+            NSApp.activate(ignoringOtherApps: true)
+            NSAlert.showModalAlert(
+                message: "Docling Granite is still downloading.",
+                informativeText: "Capture again once the download in Settings finishes.")
+        case .notInstalled, .failed:
+            let alert = NSAlert()
+            alert.messageText = "Download Docling Granite?"
+            alert.informativeText =
+                "Local extraction needs a one-time \(granite.downloadSize) download. Once installed, captures are processed entirely on this Mac."
+            alert.addButton(withTitle: "Download")
+            alert.addButton(withTitle: "Cancel")
+            NSApp.activate(ignoringOtherApps: true)
+            if alert.runModal() == .alertFirstButtonReturn {
+                granite.install()
+                showSettings()
+            }
+        }
+        return false
     }
 
     /// Initiate plain text capture

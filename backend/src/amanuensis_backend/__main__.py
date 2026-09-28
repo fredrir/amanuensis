@@ -9,7 +9,7 @@ import sys
 
 from pydantic import ValidationError
 
-from .config import MODEL_ID, MODEL_ROOT, STATE_ROOT, BackendError
+from .config import GRANITE_PACKAGES, STATE_ROOT, BackendError, granite_ready
 from .extraction import ExtractionRequest, Extractor
 from .providers import APIProviders, Provider
 from .subscriptions import Subscriptions
@@ -31,12 +31,7 @@ class Server:
 
     async def dispatch(self, method, params):
         if method == "health":
-            return {
-                "version": 1,
-                "graniteReady": (
-                    MODEL_ROOT / MODEL_ID.replace("/", "--") / "model.safetensors"
-                ).is_file(),
-            }
+            return {"version": 1, "graniteReady": granite_ready()}
         if method == "extract":
             return await self.extractor.extract(
                 ExtractionRequest.model_validate(params)
@@ -135,6 +130,8 @@ class Server:
 
 def main():
     os.umask(0o077)
+    if GRANITE_PACKAGES.is_dir():
+        sys.path.append(str(GRANITE_PACKAGES))
     STATE_ROOT.mkdir(parents=True, exist_ok=True, mode=0o700)
     os.environ["HF_HOME"] = str(STATE_ROOT / "cache/huggingface")
     os.environ["XDG_CACHE_HOME"] = str(STATE_ROOT / "cache")

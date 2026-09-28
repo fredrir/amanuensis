@@ -36,6 +36,7 @@
 		D1000001000000000000000A /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000001000000000000000B /* AIProvider.swift */; };
 		D1000005000000000000000A /* AIProviderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000005000000000000000B /* AIProviderClient.swift */; };
 		D1000006000000000000000A /* ProviderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000006000000000000000B /* ProviderStore.swift */; };
+		D1000008000000000000000A /* GraniteInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000008000000000000000B /* GraniteInstaller.swift */; };
 		D1000007000000000000000A /* ProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000007000000000000000B /* ProviderSettingsView.swift */; };
 		F5B0C7647A784F30BB1B71D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C128894D5D084D2FBAADA65C /* Assets.xcassets */; };
 		F1000002000000000000000A /* InjectionSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000000000000000A /* InjectionSupport.swift */; };
@@ -76,6 +77,7 @@
 		D1000001000000000000000B /* AIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProvider.swift; sourceTree = "<group>"; };
 		D1000005000000000000000B /* AIProviderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProviderClient.swift; sourceTree = "<group>"; };
 		D1000006000000000000000B /* ProviderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderStore.swift; sourceTree = "<group>"; };
+		D1000008000000000000000B /* GraniteInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteInstaller.swift; sourceTree = "<group>"; };
 		D1000007000000000000000B /* ProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderSettingsView.swift; sourceTree = "<group>"; };
 		C128894D5D084D2FBAADA65C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F1000001000000000000000A /* InjectionSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectionSupport.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				C1000006000000000000000B /* ScreenCaptureBackend.swift */,
 				D1000005000000000000000B /* AIProviderClient.swift */,
 				D1000006000000000000000B /* ProviderStore.swift */,
+				D1000008000000000000000B /* GraniteInstaller.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				D1000001000000000000000A /* AIProvider.swift in Sources */,
 				D1000005000000000000000A /* AIProviderClient.swift in Sources */,
 				D1000006000000000000000A /* ProviderStore.swift in Sources */,
+				D1000008000000000000000A /* GraniteInstaller.swift in Sources */,
 				D1000007000000000000000A /* ProviderSettingsView.swift in Sources */,
 				F1000002000000000000000A /* InjectionSupport.swift in Sources */,
 			);
@@ -455,7 +459,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9583C7B2DBD8C8300F43550 /* Build.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Amanuensis/Info-Debug.entitlements;
@@ -492,7 +495,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9583C7B2DBD8C8300F43550 /* Build.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Amanuensis/Info.entitlements;

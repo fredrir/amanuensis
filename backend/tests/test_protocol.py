@@ -6,6 +6,7 @@ import sys
 
 import pytest
 
+from amanuensis_backend import config
 from amanuensis_backend.__main__ import Server
 from amanuensis_backend.config import BackendError
 from amanuensis_backend.subscriptions import RPCProcess
@@ -60,3 +61,23 @@ async def test_client_crash_fails_request_without_waiting_for_timeout(tmp_path):
             await asyncio.wait_for(rpc.call("anything"), 3)
     finally:
         await rpc.close()
+
+
+async def test_health_reports_missing_granite(monkeypatch, tmp_path):
+    monkeypatch.setattr(config, "MODEL_PATH", tmp_path / "missing")
+    output = io.StringIO()
+    server = Server(output)
+    try:
+        await server.handle({"id": "health", "method": "health"})
+        await server.handle(
+            {
+                "id": "models",
+                "method": "models",
+                "params": {"provider": {"kind": "granite"}},
+            }
+        )
+        health, models = [json.loads(line) for line in output.getvalue().splitlines()]
+        assert health["result"]["graniteReady"] is False
+        assert models["error"]["code"] == "granite_missing"
+    finally:
+        await server.api.close()

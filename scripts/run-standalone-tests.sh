@@ -33,6 +33,15 @@ run_swift_test \
   ProviderRoutingTests \
   Tests/ProviderRoutingTests.swift \
   Amanuensis/Sources/Services/AIProviderClient.swift \
+  Amanuensis/Sources/Services/GraniteInstaller.swift \
+  Amanuensis/Sources/Models/AIProvider.swift \
+  Amanuensis/Sources/Config.swift
+
+run_swift_test \
+  GraniteInstallerTests \
+  Tests/GraniteInstallerTests.swift \
+  Amanuensis/Sources/Services/GraniteInstaller.swift \
+  Amanuensis/Sources/Services/AIProviderClient.swift \
   Amanuensis/Sources/Models/AIProvider.swift \
   Amanuensis/Sources/Config.swift
 

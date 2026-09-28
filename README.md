@@ -16,14 +16,14 @@ Screen capture to text, Markdown and LaTeX.
 
 | Provider | Authentication |
 |---|---|
-| Docling Granite | None; bundled, offline, Apple Silicon |
+| Docling Granite | One-time download in Settings; offline, Apple Silicon |
 | ChatGPT / Codex | ChatGPT sign-in |
 | Gemini Subscription | Google sign-in |
 | Anthropic, Gemini, OpenAI-compatible | API key |
 
 ## Building from Source
 
-Requires an Apple Silicon Mac, Xcode, `uv`, `npm`, `just`, and `xcbeautify`. Release builds bundle the backend and model. See [backend commands](backend/README.md).
+Requires an Apple Silicon Mac, Xcode, `uv`, `npm`, `just`, and `xcbeautify`. Release builds bundle the backend; Granite is a separate download. See [backend commands](backend/README.md).
 
 
 ```bash

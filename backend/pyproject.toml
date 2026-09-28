@@ -6,14 +6,21 @@ readme          = "README.md"
 authors         = [{ name = "fredrir", email = "fhansteen@gmail.com" }]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "docling>=2.100,<3",
+    "docling-slim[format-markdown]>=2.130,<3",
     "httpx>=0.28,<1",
-    "mlx-vlm>=0.3.3,<1; sys_platform == 'darwin' and platform_machine == 'arm64'",
     "pillow>=11,<13",
 ]
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.12,<1"]
+# Local inference ships as a downloadable pack, not inside the app bundle.
+granite = [
+    "docling-slim[convert-core]>=2.130,<3",
+    "mlx-vlm>=0.7.3,<1; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    # transformers only resolves the Idefics3 image processor when torchvision is installed.
+    "torch>=2.14,<3",
+    "torchvision>=0.29,<1",
+]
 
 [project.scripts]
 amanuensis-backend = "amanuensis_backend.__main__:main"
@@ -21,6 +28,9 @@ amanuensis-backend = "amanuensis_backend.__main__:main"
 [build-system]
 requires                    = ["uv_build>=0.12.18,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+default-groups = ["dev", "granite"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
