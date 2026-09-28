@@ -1,1 +1,1 @@
-"""ScreenScribe extraction backend."""
+"""Amanuensis extraction backend."""

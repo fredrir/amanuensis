@@ -10,7 +10,7 @@ private func expect(_ condition: @autoclosure () -> Bool, _ message: String) {
 @main
 struct ScreenCaptureCLIArgumentsTests {
     static func main() {
-        let outputURL = URL(fileURLWithPath: "/tmp/screenscribe-capture.png")
+        let outputURL = URL(fileURLWithPath: "/tmp/amanuensis-capture.png")
         let arguments = ScreenCaptureCLIArguments.selectionArguments(outputURL: outputURL)
 
         expect(arguments.contains("-i"), "interactive capture should stay enabled")

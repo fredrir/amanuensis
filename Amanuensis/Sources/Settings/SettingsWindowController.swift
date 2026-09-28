@@ -4,7 +4,7 @@ import SwiftUI
 
 /// UserDefaults keys used to restore the settings window across dev-mode relaunches.
 enum SettingsPersistence {
-    static let windowAutosaveName = "ScreenScribeSettings"
+    static let windowAutosaveName = "AmanuensisSettings"
     static let windowWasOpenKey = "settingsWindowWasOpen"
     static let windowTabKey = "settingsWindowTab"
 }

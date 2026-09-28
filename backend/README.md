@@ -22,4 +22,4 @@ Release builds include Python, dependencies, Node, provider clients, model weigh
 
 Granite uses [Apache 2.0](https://huggingface.co/ibm-granite/granite-docling-258M-mlx). The pinned revision is in `config.py`; its license ships beside the weights. Dependency license files ship with their packages.
 
-Account sessions are private to ScreenScribe. Sign in from Settings; subscription availability and model access follow the provider account. API keys remain in the existing provider settings. Captures use the selected provider for Text, Markdown, and LaTeX.
+Account sessions are private to Amanuensis. Sign in from Settings; subscription availability and model access follow the provider account. API keys remain in the existing provider settings. Captures use the selected provider for Text, Markdown, and LaTeX.

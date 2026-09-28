@@ -9,7 +9,7 @@ struct KeyboardShortcutTests {
         func expect(_ condition: Bool, _ message: String) {
             if !condition { fatalError(message) }
         }
-        let suite = "ScreenScribe.ShortcutTests.\(UUID().uuidString)"
+        let suite = "Amanuensis.ShortcutTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
         let original = Shortcut(keyCode: kVK_ANSI_T, modifiers: .command)

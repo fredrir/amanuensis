@@ -14,11 +14,11 @@ protocol ExtractionBackend {
 @MainActor
 final class BackendProcess: ExtractionBackend {
     static let shared = BackendProcess()
-    static let accountChanged = Notification.Name("ScreenScribeBackendAccountChanged")
+    static let accountChanged = Notification.Name("AmanuensisBackendAccountChanged")
     private var process: Process?
     private var input: FileHandle?
     private var output: FileHandle?
-    private let writer = DispatchQueue(label: "ScreenScribe.backend.stdin", qos: .userInitiated)
+    private let writer = DispatchQueue(label: "Amanuensis.backend.stdin", qos: .userInitiated)
     private var buffer = Data()
     private var pending: [String: CheckedContinuation<Data, Error>] = [:]
     private var timeouts: [String: Task<Void, Never>] = [:]
@@ -39,7 +39,7 @@ final class BackendProcess: ExtractionBackend {
                 .appendingPathComponent("backend", isDirectory: true)
             python = root.appendingPathComponent(".venv/bin/python3")
             #else
-            throw BackendFailure(message: "The bundled backend is missing. Reinstall ScreenScribe.")
+            throw BackendFailure(message: "The bundled backend is missing. Reinstall Amanuensis.")
             #endif
         }
         guard FileManager.default.isExecutableFile(atPath: python.path) else {
@@ -49,16 +49,16 @@ final class BackendProcess: ExtractionBackend {
         let stdin = Pipe()
         let stdout = Pipe()
         task.executableURL = python
-        task.arguments = ["-s", "-u", "-m", "screen_scribe_backend"]
+        task.arguments = ["-s", "-u", "-m", "amanuensis_backend"]
         task.currentDirectoryURL = root
         var environment = ProcessInfo.processInfo.environment
         let stateRoot = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask,
-            appropriateFor: nil, create: true).appendingPathComponent("ScreenScribe/backend", isDirectory: true)
+            appropriateFor: nil, create: true).appendingPathComponent("Amanuensis/backend", isDirectory: true)
         try FileManager.default.createDirectory(at: stateRoot, withIntermediateDirectories: true,
             attributes: [.posixPermissions: 0o700])
-        environment["SCREENSCRIBE_STATE_ROOT"] = stateRoot.path
+        environment["AMANUENSIS_STATE_ROOT"] = stateRoot.path
         environment["TMPDIR"] = FileManager.default.temporaryDirectory.path
-        environment["SCREENSCRIBE_BACKEND_ROOT"] = root.path
+        environment["AMANUENSIS_BACKEND_ROOT"] = root.path
         environment["PYTHONPATH"] = root.appendingPathComponent("src").path + ":" + root.appendingPathComponent("site-packages").path
         environment["PYTHONDONTWRITEBYTECODE"] = "1"
         environment["HF_HUB_OFFLINE"] = "1"

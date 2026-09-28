@@ -237,7 +237,7 @@ class APIProviders:
                 MODEL_ROOT / MODEL_ID.replace("/", "--") / "model.safetensors"
             ).is_file():
                 raise BackendError(
-                    "The bundled Granite model is missing. Rebuild ScreenScribe.",
+                    "The bundled Granite model is missing. Rebuild Amanuensis.",
                     "model_missing",
                 )
             return [MODEL_ID]

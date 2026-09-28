@@ -1,12 +1,14 @@
-# ScreenScribe
+# Amanuensis
+
+Screen capture to text, Markdown and LaTeX.
 
 
 ## Installation
 
 ### Quick Install
 
-1. **Download** the latest `.dmg` from [Releases](https://github.com/fredrir/screen-scribe/releases/latest)
-2. **Open** the DMG and drag ScreenScribe to Applications
+1. **Download** the latest `.dmg` from [Releases](https://github.com/fredrir/amanuensis/releases/latest)
+2. **Open** the DMG and drag Amanuensis to Applications
 3. **Right-click** the app and select "Open" (required for first launch)
 
 
@@ -25,16 +27,16 @@ Requires an Apple Silicon Mac, Xcode, `uv`, `npm`, `just`, and `xcbeautify`. Rel
 
 
 ```bash
-git clone https://github.com/fredrir/screen-scribe.git
-cd screen-scribe
+git clone https://github.com/fredrir/amanuensis.git
+cd amanuensis
 cp .env.example .env
 xcrun notarytool store-credentials <APPLE_NOTARY_PROFILE> --apple-id <apple-id> --team-id <APPLE_TEAM_ID>
 ```
 
 | Recipe | Output |
 |---|---|
-| `just build` | `dist/ScreenScribe-<version>-dev.dmg`, `~/Applications/ScreenScribe.app` |
-| `just deploy` | `dist/ScreenScribe-<version>.dmg` (notarized), `~/Applications/ScreenScribe.app` |
+| `just build` | `dist/Amanuensis-<version>-dev.dmg`, `~/Applications/Amanuensis.app` |
+| `just deploy` | `dist/Amanuensis-<version>.dmg` (notarized), `~/Applications/Amanuensis.app` |
 
 | Env | Default |
 |---|---|

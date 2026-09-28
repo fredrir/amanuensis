@@ -1,6 +1,6 @@
 #!/usr/bin/env swift
 //
-//  Rasterises Assets/AppIcon.svg into ScreenScribe/Assets.xcassets/AppIcon.appiconset.
+//  Rasterises Assets/AppIcon.svg into Amanuensis/Assets.xcassets/AppIcon.appiconset.
 //  Run with: just appicon
 //
 
@@ -81,7 +81,7 @@ enum AppIconRenderer {
 
 let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 let svg = root.appendingPathComponent("Assets/AppIcon.svg")
-let catalog = root.appendingPathComponent("ScreenScribe/Assets.xcassets/AppIcon.appiconset")
+let catalog = root.appendingPathComponent("Amanuensis/Assets.xcassets/AppIcon.appiconset")
 
 guard let master = NSImage(contentsOf: svg) else {
     throw AppIconRenderer.RenderError.cannotRead(svg.path)

@@ -34,12 +34,12 @@ def copy_tree(source, target):
 
 def prepare(development):
     if platform.system() != "Darwin" or platform.machine() != "arm64":
-        sys.exit("ScreenScribe requires Apple Silicon.")
+        sys.exit("Amanuensis requires Apple Silicon.")
     run("uv", "sync", "--project", str(BACKEND), "--locked")
     fingerprint = hashlib.sha256(
         (BACKEND / "clients/package-lock.json").read_bytes()
     ).hexdigest()
-    marker = BACKEND / "clients/node_modules/.screenscribe-lock"
+    marker = BACKEND / "clients/node_modules/.amanuensis-lock"
     if not marker.exists() or marker.read_text() != fingerprint:
         run(
             "npm",
@@ -53,7 +53,7 @@ def prepare(development):
         marker.write_text(fingerprint)
     model = BACKEND / "models/ibm-granite--granite-docling-258M-mlx"
     model_revision = runpy.run_path(
-        str(BACKEND / "src/screen_scribe_backend/config.py")
+        str(BACKEND / "src/amanuensis_backend/config.py")
     )["MODEL_REVISION"]
     if (
         not (model / "REVISION").exists()
@@ -68,7 +68,7 @@ def prepare(development):
             "--locked",
             "python",
             "-m",
-            "screen_scribe_backend.download_model",
+            "amanuensis_backend.download_model",
         )
     if development:
         return

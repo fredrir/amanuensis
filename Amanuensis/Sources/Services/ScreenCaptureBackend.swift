@@ -77,7 +77,7 @@ final class ScreenCaptureService {
 
     private func captureWithLegacyCLI() async -> NSImage? {
         let outputURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("screenscribe-\(UUID().uuidString)")
+            .appendingPathComponent("amanuensis-\(UUID().uuidString)")
             .appendingPathExtension("png")
 
         return await withCheckedContinuation { (continuation: CheckedContinuation<NSImage?, Never>) in

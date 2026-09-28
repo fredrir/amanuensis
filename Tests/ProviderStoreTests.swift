@@ -11,7 +11,7 @@ private func expect(_ condition: @autoclosure () -> Bool, _ message: String) {
 struct ProviderStoreTests {
     @MainActor
     static func main() {
-        let suiteName = "ScreenScribeProviderStoreTests"
+        let suiteName = "AmanuensisProviderStoreTests"
         guard let defaults = UserDefaults(suiteName: suiteName) else {
             fputs("FAIL: Could not create an isolated defaults suite\n", stderr)
             exit(1)

@@ -10,8 +10,8 @@ fi
 mode="${1:-pretty}"  # pretty | quiet
 
 xcodebuild_flags=(
-    -project ScreenScribe.xcodeproj
-    -scheme ScreenScribe
+    -project Amanuensis.xcodeproj
+    -scheme Amanuensis
     -configuration Debug
     -destination 'platform=macOS'
     -derivedDataPath build/xcode

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [[ $# -ne 1 ]]; then
-  echo "usage: $0 /path/to/ScreenScribe.app" >&2
+  echo "usage: $0 /path/to/Amanuensis.app" >&2
   exit 64
 fi
 

@@ -1,7 +1,7 @@
 [project]
-name            = "screen-scribe-backend"
+name            = "amanuensis-backend"
 version         = "0.1.0"
-description     = "ScreenScribe Backend"
+description     = "Amanuensis Backend"
 readme          = "README.md"
 authors         = [{ name = "fredrir", email = "fhansteen@gmail.com" }]
 requires-python = ">=3.12,<3.13"
@@ -16,7 +16,7 @@ dependencies = [
 dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.12,<1"]
 
 [project.scripts]
-screen-scribe-backend = "screen_scribe_backend.__main__:main"
+amanuensis-backend = "amanuensis_backend.__main__:main"
 
 [build-system]
 requires                    = ["uv_build>=0.12.18,<0.13.0"]

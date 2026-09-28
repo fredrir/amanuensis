@@ -1,5 +1,5 @@
-from screen_scribe_backend.providers import Provider
-from screen_scribe_backend.subscriptions import Subscriptions
+from amanuensis_backend.providers import Provider
+from amanuensis_backend.subscriptions import Subscriptions
 
 
 class FakeCodex:

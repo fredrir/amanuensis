@@ -1632,7 +1632,7 @@ wheels = [
 ]
 
 [[package]]
-name = "screen-scribe-backend"
+name = "amanuensis-backend"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

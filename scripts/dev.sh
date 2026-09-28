@@ -2,24 +2,24 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-app="build/xcode/Build/Products/Debug/ScreenScribe.app"
-binary="$app/Contents/MacOS/ScreenScribe"
+app="build/xcode/Build/Products/Debug/Amanuensis.app"
+binary="$app/Contents/MacOS/Amanuensis"
 log="build/dev-app.log"
 
 cleanup() {
-  pkill -x ScreenScribe 2>/dev/null || true
+  pkill -x Amanuensis 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "        🔨 Building ScreenScribe"
+echo "        🔨 Building Amanuensis"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 ./scripts/build-debug.sh
 
-pkill -x ScreenScribe 2>/dev/null || true
+pkill -x Amanuensis 2>/dev/null || true
 for _ in {1..50}; do
-  if ! pgrep -x ScreenScribe >/dev/null 2>&1; then
+  if ! pgrep -x Amanuensis >/dev/null 2>&1; then
     break
   fi
   sleep 0.05
@@ -28,7 +28,7 @@ done
 mkdir -p build
 : >"$log"
 
-INJECTION_DIRECTORIES="$PWD/ScreenScribe/Sources,$PWD/build/xcode/Logs/Build" \
+INJECTION_DIRECTORIES="$PWD/Amanuensis/Sources,$PWD/build/xcode/Logs/Build" \
   NSUnbufferedIO=YES \
   nohup "$binary" --restore-settings >>"$log" 2>&1 &
 

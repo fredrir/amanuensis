@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ScreenScribe",
+    name: "Amanuensis",
     platforms: [
         .macOS(.v14)
     ],
@@ -11,9 +11,9 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "ScreenScribe",
+            name: "Amanuensis",
             dependencies: ["InjectionLite"],
-            path: "ScreenScribe",
+            path: "Amanuensis",
             exclude: [
                 "Assets.xcassets",
                 "Info.entitlements",

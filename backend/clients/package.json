@@ -1,5 +1,5 @@
 {
-  "name": "screenscribe-provider-clients",
+  "name": "amanuensis-provider-clients",
   "private": true,
   "version": "0.1.0",
   "dependencies": {

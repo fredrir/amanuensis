@@ -4,8 +4,8 @@ import io
 import pytest
 from PIL import Image
 
-from screen_scribe_backend.config import BackendError
-from screen_scribe_backend.extraction import (
+from amanuensis_backend.config import BackendError
+from amanuensis_backend.extraction import (
     ExtractionRequest,
     Extractor,
     decode_image,

@@ -6,9 +6,9 @@ import sys
 
 import pytest
 
-from screen_scribe_backend.__main__ import Server
-from screen_scribe_backend.config import BackendError
-from screen_scribe_backend.subscriptions import RPCProcess
+from amanuensis_backend.__main__ import Server
+from amanuensis_backend.config import BackendError
+from amanuensis_backend.subscriptions import RPCProcess
 
 
 async def test_backend_keeps_serving_after_invalid_request():

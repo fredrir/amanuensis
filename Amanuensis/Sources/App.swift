@@ -196,7 +196,7 @@ final class App: NSObject, NSApplicationDelegate {
         appMenuItem.submenu = appMenu
 
         let aboutItem = NSMenuItem(
-            title: "About ScreenScribe",
+            title: "About Amanuensis",
             action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
             keyEquivalent: "")
         appMenu.addItem(aboutItem)
@@ -212,12 +212,12 @@ final class App: NSObject, NSApplicationDelegate {
 
         appMenu.addItem(
             NSMenuItem(
-                title: "Hide ScreenScribe",
+                title: "Hide Amanuensis",
                 action: #selector(NSApplication.hide(_:)),
                 keyEquivalent: "h"))
         appMenu.addItem(
             NSMenuItem(
-                title: "Quit ScreenScribe",
+                title: "Quit Amanuensis",
                 action: #selector(NSApplication.terminate(_:)),
                 keyEquivalent: "q"))
 
@@ -360,7 +360,7 @@ final class App: NSObject, NSApplicationDelegate {
         let alert = NSAlert()
         alert.messageText = "Screen Recording Permission"
         alert.informativeText =
-            "ScreenScribe needs Screen Recording permission to capture screen regions.\n\nContinue to request permission now, or open System Settings to enable it manually."
+            "Amanuensis needs Screen Recording permission to capture screen regions.\n\nContinue to request permission now, or open System Settings to enable it manually."
         alert.alertStyle = .informational
 
         alert.addButton(withTitle: "Continue")
@@ -536,7 +536,7 @@ final class App: NSObject, NSApplicationDelegate {
                 let alert = NSAlert()
                 alert.messageText = "Screen Recording Permission"
                 alert.informativeText =
-                    "macOS has not granted Screen Recording access to ScreenScribe. Open System Settings to review its access. If macOS asks you to quit and reopen the app, do so before capturing again."
+                    "macOS has not granted Screen Recording access to Amanuensis. Open System Settings to review its access. If macOS asks you to quit and reopen the app, do so before capturing again."
                 alert.addButton(withTitle: "Open System Settings")
                 alert.addButton(withTitle: "Cancel")
                 NSApp.activate(ignoringOtherApps: true)

@@ -3,11 +3,11 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 _default:
 	@just --list
 
-project := "ScreenScribe.xcodeproj"
-scheme := "ScreenScribe"
+project := "Amanuensis.xcodeproj"
+scheme := "Amanuensis"
 dest := "platform=macOS"
 derived_data := "build/xcode"
-app_path := home_directory() / "Applications/ScreenScribe.app"
+app_path := home_directory() / "Applications/Amanuensis.app"
 
 # Build once, launch, and inject Swift changes in-process (no relaunch).
 dev:
@@ -25,7 +25,7 @@ xcode:
 typecheck:
 	@swift build
 
-# Build, sign, package, and install ScreenScribe.app [ --no-install --no-package --adhoc ]
+# Build, sign, package, and install Amanuensis.app [ --no-install --no-package --adhoc ]
 build *args:
 	@./scripts/build.sh {{args}}
 

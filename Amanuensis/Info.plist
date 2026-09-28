@@ -17,7 +17,7 @@
 
   <!-- privacy -->
   <key>NSScreenCaptureUsageDescription</key>
-  <string>ScreenScribe needs screen-recording permission to capture screenshots for content extraction.</string>
+  <string>Amanuensis needs screen-recording permission to capture screenshots for content extraction.</string>
 
   <!-- allow http endpoints on the local machine (Ollama, LM Studio, …) -->
   <key>NSAppTransportSecurity</key>

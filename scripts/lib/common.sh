@@ -4,7 +4,7 @@ COMMON_SH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_DIR="$(cd "${COMMON_SH_DIR}/.." && pwd)"
 REPO_ROOT="$(cd "${SCRIPTS_DIR}/.." && pwd)"
 
-APP_NAME="ScreenScribe"
+APP_NAME="Amanuensis"
 PROJECT="${REPO_ROOT}/${APP_NAME}.xcodeproj"
 DERIVED_DATA="${REPO_ROOT}/build/xcode"
 RELEASE_APP="${DERIVED_DATA}/Build/Products/Release/${APP_NAME}.app"

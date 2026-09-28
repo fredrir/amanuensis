@@ -3,7 +3,7 @@
 set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
-tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/screenscribe-standalone-tests.XXXXXX")
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/amanuensis-standalone-tests.XXXXXX")
 
 cleanup() {
   rm -rf "$tmpdir"
@@ -25,54 +25,54 @@ cd "$repo_root"
 run_swift_test \
   ProviderStoreTests \
   Tests/ProviderStoreTests.swift \
-  ScreenScribe/Sources/Services/ProviderStore.swift \
-  ScreenScribe/Sources/Models/AIProvider.swift \
-  ScreenScribe/Sources/Config.swift
+  Amanuensis/Sources/Services/ProviderStore.swift \
+  Amanuensis/Sources/Models/AIProvider.swift \
+  Amanuensis/Sources/Config.swift
 
 run_swift_test \
   ProviderRoutingTests \
   Tests/ProviderRoutingTests.swift \
-  ScreenScribe/Sources/Services/AIProviderClient.swift \
-  ScreenScribe/Sources/Models/AIProvider.swift \
-  ScreenScribe/Sources/Config.swift
+  Amanuensis/Sources/Services/AIProviderClient.swift \
+  Amanuensis/Sources/Models/AIProvider.swift \
+  Amanuensis/Sources/Config.swift
 
 run_swift_test \
   ScreenCaptureCLIArgumentsTests \
   Tests/ScreenCaptureCLIArgumentsTests.swift \
-  ScreenScribe/Sources/Services/ScreenCaptureBackend.swift \
-  ScreenScribe/Sources/Logger.swift \
+  Amanuensis/Sources/Services/ScreenCaptureBackend.swift \
+  Amanuensis/Sources/Logger.swift \
   -framework AppKit \
   -framework ScreenCaptureKit
 
 run_swift_test \
   ScreenCaptureStrategyTests \
   Tests/ScreenCaptureStrategyTests.swift \
-  ScreenScribe/Sources/Services/ScreenCaptureBackend.swift \
-  ScreenScribe/Sources/Logger.swift \
+  Amanuensis/Sources/Services/ScreenCaptureBackend.swift \
+  Amanuensis/Sources/Logger.swift \
   -framework AppKit \
   -framework ScreenCaptureKit
 
 run_swift_test \
   ScreenRegionSelectionTeardownTests \
   Tests/ScreenRegionSelectionTeardownTests.swift \
-  ScreenScribe/Sources/Services/ScreenCaptureBackend.swift \
-  ScreenScribe/Sources/Logger.swift \
+  Amanuensis/Sources/Services/ScreenCaptureBackend.swift \
+  Amanuensis/Sources/Logger.swift \
   -framework AppKit \
   -framework ScreenCaptureKit
 
 run_swift_test \
   ScreenCapturePermissionManagerTests \
   Tests/ScreenCapturePermissionManagerTests.swift \
-  ScreenScribe/Sources/Services/ScreenCapturePermissionManager.swift \
-  ScreenScribe/Sources/Logger.swift \
+  Amanuensis/Sources/Services/ScreenCapturePermissionManager.swift \
+  Amanuensis/Sources/Logger.swift \
   -framework AppKit \
   -framework ScreenCaptureKit
 
 run_swift_test \
   KeyboardShortcutTests \
   Tests/KeyboardShortcutTests.swift \
-  ScreenScribe/Sources/Settings/ShortcutMonitor.swift \
-  ScreenScribe/Sources/Settings/SettingsManager.swift \
-  ScreenScribe/Sources/Config.swift \
+  Amanuensis/Sources/Settings/ShortcutMonitor.swift \
+  Amanuensis/Sources/Settings/SettingsManager.swift \
+  Amanuensis/Sources/Config.swift \
   -framework AppKit \
   -framework Carbon

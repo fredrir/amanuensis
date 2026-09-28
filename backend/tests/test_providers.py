@@ -3,8 +3,8 @@ import json
 import httpx
 import pytest
 
-from screen_scribe_backend.config import BackendError
-from screen_scribe_backend.providers import APIProviders, Provider, inline_vision_models
+from amanuensis_backend.config import BackendError
+from amanuensis_backend.providers import APIProviders, Provider, inline_vision_models
 
 
 @pytest.mark.parametrize(

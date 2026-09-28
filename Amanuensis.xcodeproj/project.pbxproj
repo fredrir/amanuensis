@@ -67,9 +67,9 @@
 		B9583C992DBD8C8300F43550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9583C9A2DBD8C8300F43550 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B9583C9B2DBD8C8300F43550 /* Screen Capture.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Screen Capture.aif"; sourceTree = "<group>"; };
-		B9583C9E2DBD8C8300F43550 /* ScreenScribe.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ScreenScribe.xcodeproj; sourceTree = "<group>"; };
+		B9583C9E2DBD8C8300F43550 /* Amanuensis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Amanuensis.xcodeproj; sourceTree = "<group>"; };
 		B9583C9F2DBD8C8300F43550 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		B9583CCA2DBD935300F43550 /* ScreenScribe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenScribe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9583CCA2DBD935300F43550 /* Amanuensis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amanuensis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F54FE82F10866C0070D1C2 /* ScreenCapturePermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCapturePermissionManager.swift; sourceTree = "<group>"; };
 		C1000001000000000000000B /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		C1000006000000000000000B /* ScreenCaptureBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureBackend.swift; sourceTree = "<group>"; };
@@ -98,10 +98,10 @@
 			isa = PBXGroup;
 			children = (
 				B9583C7B2DBD8C8300F43550 /* Build.xcconfig */,
-				B9583C9D2DBD8C8300F43550 /* ScreenScribe */,
-				B9583C9E2DBD8C8300F43550 /* ScreenScribe.xcodeproj */,
+				B9583C9D2DBD8C8300F43550 /* Amanuensis */,
+				B9583C9E2DBD8C8300F43550 /* Amanuensis.xcodeproj */,
 				B9583C9F2DBD8C8300F43550 /* LICENSE */,
-				B9583CCA2DBD935300F43550 /* ScreenScribe.app */,
+				B9583CCA2DBD935300F43550 /* Amanuensis.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -162,7 +162,7 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		B9583C9D2DBD8C8300F43550 /* ScreenScribe */ = {
+		B9583C9D2DBD8C8300F43550 /* Amanuensis */ = {
 			isa = PBXGroup;
 			children = (
 				C128894D5D084D2FBAADA65C /* Assets.xcassets */,
@@ -173,7 +173,7 @@
 				B9583C9A2DBD8C8300F43550 /* main.swift */,
 				B9583C9B2DBD8C8300F43550 /* Screen Capture.aif */,
 			);
-			path = ScreenScribe;
+			path = Amanuensis;
 			sourceTree = "<group>";
 		};
 		B9583CA42DBD8C8300F43550 /* Products */ = {
@@ -193,9 +193,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		87E192BE2BAADE1200A87A4E /* ScreenScribe */ = {
+		87E192BE2BAADE1200A87A4E /* Amanuensis */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87E192CE2BAADE1400A87A4E /* Build configuration list for PBXNativeTarget "ScreenScribe" */;
+			buildConfigurationList = 87E192CE2BAADE1400A87A4E /* Build configuration list for PBXNativeTarget "Amanuensis" */;
 			buildPhases = (
 				87E192BB2BAADE1200A87A4E /* Sources */,
 				87E192BC2BAADE1200A87A4E /* Frameworks */,
@@ -209,9 +209,9 @@
 			packageProductDependencies = (
 				F1000004000000000000000A /* InjectionLite */,
 			);
-			name = ScreenScribe;
+			name = Amanuensis;
 			productName = TextGrabber2;
-			productReference = B9583CCA2DBD935300F43550 /* ScreenScribe.app */;
+			productReference = B9583CCA2DBD935300F43550 /* Amanuensis.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 87E192BA2BAADE1200A87A4E /* Build configuration list for PBXProject "ScreenScribe" */;
+			buildConfigurationList = 87E192BA2BAADE1200A87A4E /* Build configuration list for PBXProject "Amanuensis" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,7 +242,7 @@
 			projectReferences = (
 				{
 					ProductGroup = B9583CA42DBD8C8300F43550 /* Products */;
-					ProjectRef = B9583C9E2DBD8C8300F43550 /* ScreenScribe.xcodeproj */;
+					ProjectRef = B9583C9E2DBD8C8300F43550 /* Amanuensis.xcodeproj */;
 				},
 			);
 			packageReferences = (
@@ -250,7 +250,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				87E192BE2BAADE1200A87A4E /* ScreenScribe */,
+				87E192BE2BAADE1200A87A4E /* Amanuensis */,
 			);
 		};
 /* End PBXProject section */
@@ -458,7 +458,7 @@
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
-				CODE_SIGN_ENTITLEMENTS = ScreenScribe/Info-Debug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Amanuensis/Info-Debug.entitlements;
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -469,8 +469,8 @@
 				EMIT_FRONTEND_COMMAND_LINES = YES;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ScreenScribe/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ScreenScribe;
+				INFOPLIST_FILE = Amanuensis/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Amanuensis;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -495,7 +495,7 @@
 				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
-				CODE_SIGN_ENTITLEMENTS = ScreenScribe/Info.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Amanuensis/Info.entitlements;
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -505,8 +505,8 @@
 				DEVELOPMENT_TEAM = 48XF26BUN9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = ScreenScribe/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ScreenScribe;
+				INFOPLIST_FILE = Amanuensis/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Amanuensis;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -526,7 +526,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		87E192BA2BAADE1200A87A4E /* Build configuration list for PBXProject "ScreenScribe" */ = {
+		87E192BA2BAADE1200A87A4E /* Build configuration list for PBXProject "Amanuensis" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87E192CC2BAADE1400A87A4E /* Debug */,
@@ -535,7 +535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87E192CE2BAADE1400A87A4E /* Build configuration list for PBXNativeTarget "ScreenScribe" */ = {
+		87E192CE2BAADE1400A87A4E /* Build configuration list for PBXNativeTarget "Amanuensis" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87E192CF2BAADE1400A87A4E /* Debug */,

@@ -178,7 +178,7 @@ class Subscriptions:
                 )
                 if not binary.exists():
                     raise BackendError(
-                        "The bundled Codex client is missing. Rebuild ScreenScribe.",
+                        "The bundled Codex client is missing. Rebuild Amanuensis.",
                         "client_missing",
                     )
                 environment["CODEX_HOME"] = str(directory)
@@ -204,7 +204,7 @@ class Subscriptions:
                 )
                 if not node_command or not script.exists():
                     raise BackendError(
-                        "The bundled Gemini client is missing. Rebuild ScreenScribe.",
+                        "The bundled Gemini client is missing. Rebuild Amanuensis.",
                         "client_missing",
                     )
                 environment["GEMINI_CLI_HOME"] = str(directory)
@@ -213,7 +213,7 @@ class Subscriptions:
                     directory / "system-settings.json"
                 )
                 settings = {
-                    "tools": {"core": ["__screenscribe_no_tools__"]},
+                    "tools": {"core": ["__amanuensis_no_tools__"]},
                     "context": {"fileName": []},
                     "telemetry": {"enabled": False},
                     "general": {"enableAutoUpdate": False},
@@ -231,7 +231,7 @@ class Subscriptions:
                 if kind == "codex":
                     await rpc.call(
                         "initialize",
-                        {"clientInfo": {"name": "screenscribe", "version": "0.1.0"}},
+                        {"clientInfo": {"name": "amanuensis", "version": "0.1.0"}},
                     )
                     await rpc.send({"method": "initialized"})
                 else:
@@ -243,7 +243,7 @@ class Subscriptions:
                                 "fs": {"readTextFile": False, "writeTextFile": False},
                                 "terminal": False,
                             },
-                            "clientInfo": {"name": "screenscribe", "version": "0.1.0"},
+                            "clientInfo": {"name": "amanuensis", "version": "0.1.0"},
                         },
                     )
             except BaseException:
@@ -338,7 +338,7 @@ class Subscriptions:
         if kind == "codex":
             (self.directory(kind) / "auth.json").unlink(missing_ok=True)
         if kind == "geminiSubscription":
-            # This directory belongs exclusively to ScreenScribe.
+            # This directory belongs exclusively to Amanuensis.
             shutil.rmtree(self.directory(kind) / ".gemini", ignore_errors=True)
         self.notify("accountChanged", {"kind": kind, "signedIn": False})
         return {"signedIn": False}
