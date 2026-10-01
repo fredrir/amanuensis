@@ -46,4 +46,4 @@ xcrun notarytool store-credentials <APPLE_NOTARY_PROFILE> --apple-id <apple-id> 
 
 ## Acknowledgments
 
-Built on top of [TextGrabber2](https://github.com/TextGrabber2-app/TextGrabber2) by cyanzhong
+Built on top of [Screen-Scribe](https://github.com/SamuelZ12/screen-scribe) by SamuelZ12, which again is built on top of [TextGrabber2](https://github.com/TextGrabber2-app/TextGrabber2) by cyanzhong
